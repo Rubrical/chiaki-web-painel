@@ -1,1 +1,11 @@
-<p>qrcode works!</p>
+<div>
+  @if (qrCode) {
+    <h2>Escaneie o código</h2>]
+    <img [src]="qrImageUrl" width="300" height="300">
+  }
+  @if (!qrCode) {
+    <div>
+      <h2>Aguardando qrcode</h2>
+    </div>
+  }
+</div>
