@@ -1,11 +1,8 @@
-FROM node:22.3.0 as builder
+FROM node:22.3.0
 WORKDIR /app
 COPY . .
 RUN npm install
-RUN npm run build
+RUN npm install -g @angular/cli
 
-FROM nginx:alpine
-COPY --from=builder /app/dist/chiaki-web-painel /usr/share/nginx/html
-COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["ng", "serve", "--host", "0.0.0.0", "--port", "80"]

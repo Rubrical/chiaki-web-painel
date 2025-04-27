@@ -29,6 +29,7 @@ export class AuthFormComponent implements OnInit {
 
   ngOnInit() {
     this.authService.checkRootExists().subscribe(exists => {
+      console.log(exists);
       this.rootExists = exists;
       this.mode = exists ? 'login' : 'signup';
       this.updateFormValidators();
@@ -62,6 +63,7 @@ export class AuthFormComponent implements OnInit {
 
       authAction.subscribe({
         next: (response) => {
+          console.log(response);
           localStorage.setItem('token', response.token);
 
           this.router.navigateByUrl('/home');
