@@ -1,9 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService, Root } from '../services/auth.service';
-import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-auth-form',
@@ -16,7 +15,6 @@ export class AuthFormComponent implements OnInit {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
-  private route = inject(ActivatedRoute);
 
   mode: 'login' | 'signup' = 'login';
   errorMessage = '';
@@ -28,8 +26,11 @@ export class AuthFormComponent implements OnInit {
   });
 
   ngOnInit() {
+    if (this.authService.isAuthenticated()) {
+      this.authService.removeToken();
+    }
+
     this.authService.checkRootExists().subscribe(exists => {
-      console.log(exists);
       this.rootExists = exists;
       this.mode = exists ? 'login' : 'signup';
       this.updateFormValidators();
@@ -56,14 +57,16 @@ export class AuthFormComponent implements OnInit {
     const formData: Root = {
       username: this.authForm.controls.name.value ?? '',
       password: this.authForm.controls.password.value ?? '',
-    }
+    };
+
+    this.authForm.reset();
+
     const authAction = this.mode === 'login'
       ? this.authService.login(formData)
       : this.authService.signup(formData);
 
       authAction.subscribe({
         next: (response) => {
-          console.log(response);
           localStorage.setItem('token', response.token);
 
           this.router.navigateByUrl('/home');

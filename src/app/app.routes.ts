@@ -1,23 +1,20 @@
 import { Routes } from '@angular/router';
-import { AuthFormComponent } from './auth-form/auth-form.component';
 import { authGuard } from './guards/auth.guard';
-import { QrcodeComponent } from './qrcode/qrcode.component';
-import { MainComponent } from './main/main.component';
 
 export const routes: Routes = [
   {
     path: 'auth',
-    component: AuthFormComponent,
+    loadComponent: () => import("./auth-form/auth-form.component").then(c => c.AuthFormComponent),
     data: { mode: 'login' },
   },
   {
     path: 'qrcode',
-    component: QrcodeComponent,
+    loadComponent: () => import("./qrcode/qrcode.component").then(c => c.QrcodeComponent),
     canActivate: [authGuard],
   },
   {
     path: 'home',
-    component: MainComponent,
+    loadComponent: () => import("./main/main.component").then(c => c.MainComponent),
     canActivate: [authGuard],
   },
   { path: '', redirectTo: '/auth', pathMatch: 'full' },

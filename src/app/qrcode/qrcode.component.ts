@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { io, Socket } from "socket.io-client";
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-qrcode',
@@ -10,19 +11,27 @@ import { io, Socket } from "socket.io-client";
 })
 export class QrcodeComponent implements OnInit, OnDestroy {
   private socket: Socket;
+  isConnected: boolean = false;
   qrCode: string | null = null;
   qrImageUrl: string = '';
 
   constructor() {
-    // Conectar ao seu backend
-    this.socket = io('http://localhost:3001');
+    this.socket = io(environment.socketUrl);
   }
 
   ngOnInit(): void {
-    // this.socket.on('qr', (qrBase64: string) => {
-    //   console.log(qrBase64);
-    //   this.qrImageUrl = `data:image/png;base64,${qrBase64}`;
-    // });
+    this.socket.on("connect", () => {
+      this.isConnected = true;
+    });
+
+    this.socket.on("disconnect", () => {
+      this.isConnected = false;
+    });
+
+    this.socket.on('connect_error', () => {
+      this.isConnected = false;
+    });
+
     this.socket.on('qr', (qrString: string) => {
       this.qrCode = qrString;
       this.qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(qrString)}`;

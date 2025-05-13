@@ -1,11 +1,14 @@
-<div>
-  @if (qrCode) {
-    <h2>Escaneie o código</h2>]
-    <img [src]="qrImageUrl" width="300" height="300">
-  }
-  @if (!qrCode) {
-    <div>
-      <h2>Aguardando qrcode</h2>
-    </div>
+<div class="qr-wrapper">
+  @if (isConnected) {
+    @if (qrCode) {
+      <h2>Escaneie o código</h2>
+      <img [src]="qrImageUrl" class="qr-image" alt="QR Code">
+    } @else {
+      <h2>Aguardando QR Code...</h2>
+      <p>Verifique se o sistema está pronto para gerar o código.</p>
+    }
+  } @else {
+    <h2>Sem conexão com o servidor</h2>
+    <p>Verifique sua rede ou tente novamente mais tarde.</p>
   }
 </div>

@@ -28,6 +28,10 @@ export class AuthService {
     return !!this.token;
   }
 
+  removeToken(): void {
+    localStorage.removeItem("token");
+  }
+
   getToken(): string | null {
     return this.token;
   }

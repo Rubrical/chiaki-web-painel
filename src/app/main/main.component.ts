@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.sass'],
+  standalone: true
 })
 export class MainComponent {
   navigationLinks = [
