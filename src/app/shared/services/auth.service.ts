@@ -24,6 +24,28 @@ export class AuthService {
   }
   constructor(private http: HttpClient) { }
 
+  private decodeToken(): any | null {
+    if (!this.token) return null;
+    try {
+      const payload = atob(this.token.split('.')[1]);
+      return JSON.parse(payload);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  isTokenValid(): boolean {
+    const decoded = this.decodeToken();
+    if (!decoded || !decoded.exp) return false;
+    const now = Math.floor(Date.now() / 1000);
+    return decoded.exp > now;
+  }
+
+  getUsername(): string | null {
+    const decoded = this.decodeToken();
+    return decoded?.username ?? null;
+  }
+
   isAuthenticated(): boolean {
     return !!this.token;
   }
