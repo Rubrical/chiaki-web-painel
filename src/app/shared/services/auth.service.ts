@@ -25,9 +25,10 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   private decodeToken(): any | null {
-    if (!this.token) return null;
+    const token = this.getToken();
+    if (!token) return null;
     try {
-      const payload = atob(this.token.split('.')[1]);
+      const payload = atob(token.split('.')[1]);
       return JSON.parse(payload);
     } catch (e) {
       return null;
@@ -47,7 +48,7 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    return !!this.token;
+    return !!this.getToken();
   }
 
   removeToken(): void {
@@ -55,7 +56,12 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return this.token;
+    return localStorage.getItem('token');
+  }
+
+  setToken(token: string): void {
+    localStorage.setItem('token', token);
+    this.token = token;
   }
 
   login(root: Root): Observable<{ token: string }> {

@@ -79,13 +79,14 @@ export class AuthFormComponent implements OnInit {
 
       authAction.subscribe({
         next: (response) => {
-          localStorage.setItem('token', response.token);
+          this.authService.setToken(response.token);
           this.router.navigateByUrl('/home');
         },
         error: (err) => {
           this.errorMessage = this.mode === 'login'
             ? 'Login falhou. Usuário ou senha incorretos'
             : 'Falha no registro. Tente novamente';
+          this.showToast = true;
           console.error('Auth error:', err);
         },
       });
