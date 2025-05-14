@@ -1,8 +1,8 @@
-<div class="main-container">
+<div class="container main-container">
   <h1>Bem-vindo!</h1>
   <div class="buttons-container">
     @for (link of navigationLinks; track $index) {
-      <button (click)="navigateTo(link.route)">{{ link.label }}</button>
+      <button class="btn btn-primary"  (click)="navigateTo(link.route)">{{ link.label }}</button>
     }
   </div>
 </div>

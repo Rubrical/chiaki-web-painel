@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import { backendUrl } from '../app.config';
+import { backendUrl } from '../../app.config';
 
 export interface Root {
   username?: string;

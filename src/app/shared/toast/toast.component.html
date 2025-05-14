@@ -1,0 +1,19 @@
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1055">
+  <div
+    *ngIf="showToast"
+    class="toast {{ toastClass }} show"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+    [@fadeSlide]
+  >
+    <div class="toast-body d-flex p-3 m-1">
+      <p class="m-0 p-0">{{ message }}</p>
+      <button
+        type="button"
+        class="btn-close btn-close-white ms-auto justify-content-end"
+        (click)="closeToast()"
+      ></button>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,8 @@
-<div class="auth-container" [class.signup-mode]="mode === 'signup'">
+<header>
+  <h2>Bem-Vindo ao Painel Administrativo do ChiakiBot!</h2>
+</header>
+
+<div class="auth-container">
   <h2>{{ mode === 'login' ? 'Login' : 'Configuração inicial do ChiakiBot!' }}</h2>
 
   <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
@@ -26,12 +30,15 @@
       </div>
     </div>
 
-    <div class="error-message" *ngIf="errorMessage">
-      {{ errorMessage }}
-    </div>
-
     <button type="submit" [disabled]="authForm.invalid">
       {{ mode === 'login' ? 'Entrar' : 'Criar conta' }}
     </button>
   </form>
 </div>
+
+<app-toast
+  [message]="errorMessage"
+  [showToast]="showToast"
+  [type]="'error'"
+  (toastClosed)="showToast = false"
+/>
