@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { io, Socket } from "socket.io-client";
 import { environment } from '../../environments/environment';
+import { ToastComponent, ToastType } from '../shared/toast/toast.component';
 
 @Component({
   selector: 'app-qrcode',
   standalone: true,
-  imports: [],
+  imports: [ToastComponent],
   templateUrl: './qrcode.component.html',
   styleUrl: './qrcode.component.sass'
 })
@@ -15,6 +16,10 @@ export class QrcodeComponent implements OnInit, OnDestroy {
   qrCode: string | null = null;
   qrImageUrl: string = '';
 
+  isMessage = '';
+  isToastOpen: boolean = false;
+  toastType: ToastType = 'error';
+
   constructor() {
     this.socket = io(environment.socketUrl);
   }
@@ -22,6 +27,7 @@ export class QrcodeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.socket.on("connect", () => {
       this.isConnected = true;
+
     });
 
     this.socket.on("disconnect", () => {
@@ -30,6 +36,9 @@ export class QrcodeComponent implements OnInit, OnDestroy {
 
     this.socket.on('connect_error', () => {
       this.isConnected = false;
+      this.socket.disconnect();
+
+      this.openToast("Erro ao se comunicar com o servidor", "error");
     });
 
     this.socket.on('qr', (qrString: string) => {
@@ -42,5 +51,11 @@ export class QrcodeComponent implements OnInit, OnDestroy {
     if (this.socket) {
       this.socket.disconnect();
     }
+  }
+
+  openToast(msg: string, type: ToastType): void {
+    this.isMessage = msg;
+    this.toastType = type;
+    this.isToastOpen = true;
   }
 }

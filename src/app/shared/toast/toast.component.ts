@@ -1,9 +1,9 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 
 
-export type toastType = 'success' | 'error' | 'warning';
+export type ToastType = 'success' | 'error' | 'warning';
 
 @Component({
   selector: 'app-toast',
@@ -23,11 +23,21 @@ export type toastType = 'success' | 'error' | 'warning';
     ]),
   ]
 })
-export class ToastComponent {
+export class ToastComponent implements OnChanges {
   @Input() message: string = '';
   @Input() showToast: boolean = false;
-  @Input() type: toastType = 'error';
+  @Input() type: ToastType = 'error';
+  @Input() delayMs = 5000;
   @Output() toastClosed = new EventEmitter<void>();
+
+  private timeoutRef: any;
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['showToast']?.currentValue === true) {
+      clearTimeout(this.timeoutRef);
+      this.timeoutRef = setTimeout(() => this.closeToast(), this.delayMs);
+    }
+  }
 
   closeToast() {
     this.showToast = false;

@@ -1,4 +1,4 @@
-<div class="qr-wrapper">
+<div class="container qr-wrapper">
   @if (isConnected) {
     @if (qrCode) {
       <h2>Escaneie o código</h2>
@@ -8,7 +8,14 @@
       <p>Verifique se o sistema está pronto para gerar o código.</p>
     }
   } @else {
-    <h2>Sem conexão com o servidor</h2>
-    <p>Verifique sua rede ou tente novamente mais tarde.</p>
+    <h2>Bot Conectado</h2>
   }
 </div>
+
+<app-toast
+  [showToast]="isToastOpen"
+  [message]="isMessage"
+  [type]="toastType"
+  [delayMs]="8000"
+  (toastClosed)="isToastOpen = false"
+/>

@@ -48,7 +48,6 @@ export class AuthFormComponent implements OnInit {
         if (!err.status || err.status === 0) {
           this.errorMessage = "Sistema Offline";
           this.showToast = true;
-          setTimeout(() => this.showToast = false, 4000);
         }
         console.log(err);
       }
@@ -90,9 +89,5 @@ export class AuthFormComponent implements OnInit {
           console.error('Auth error:', err);
         },
       });
-  }
-
-  openToast(): void {
-
   }
 }
