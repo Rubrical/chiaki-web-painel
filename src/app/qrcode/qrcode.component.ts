@@ -2,11 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { io, Socket } from "socket.io-client";
 import { environment } from '../../environments/environment';
 import { ToastComponent, ToastType } from '../shared/toast/toast.component';
+import { VoltarComponent } from '../shared/voltar/voltar.component';
 
 @Component({
   selector: 'app-qrcode',
   standalone: true,
-  imports: [ToastComponent],
+  imports: [ToastComponent, VoltarComponent],
   templateUrl: './qrcode.component.html',
   styleUrl: './qrcode.component.sass'
 })
