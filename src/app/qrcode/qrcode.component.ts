@@ -1,25 +1,23 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { io, Socket } from "socket.io-client";
 import { environment } from '../../environments/environment';
-import { ToastComponent, ToastType } from '../shared/toast/toast.component';
+import { ToastType } from '../shared/toast/toast.component';
 import { VoltarComponent } from '../shared/voltar/voltar.component';
+import { ToastService } from '../shared/services/toast.service';
 
 @Component({
   selector: 'app-qrcode',
   standalone: true,
-  imports: [ToastComponent, VoltarComponent],
+  imports: [VoltarComponent],
   templateUrl: './qrcode.component.html',
   styleUrl: './qrcode.component.sass'
 })
 export class QrcodeComponent implements OnInit, OnDestroy {
+  private toastService = inject(ToastService);
   private socket: Socket;
   isConnected: boolean = false;
   qrCode: string | null = null;
   qrImageUrl: string = '';
-
-  isMessage = '';
-  isToastOpen: boolean = false;
-  toastType: ToastType = 'error';
 
   constructor() {
     this.socket = io(environment.socketUrl);
@@ -39,7 +37,8 @@ export class QrcodeComponent implements OnInit, OnDestroy {
       this.isConnected = false;
       this.socket.disconnect();
 
-      this.openToast("Erro ao se comunicar com o servidor", "error");
+      // this.openToast("Erro ao se comunicar com o servidor", "error");
+      this.toastService.error("Erro ao se comunicar com o servidor", 8000);
     });
 
     this.socket.on('qr', (qrString: string) => {
@@ -54,9 +53,4 @@ export class QrcodeComponent implements OnInit, OnDestroy {
     }
   }
 
-  openToast(msg: string, type: ToastType): void {
-    this.isMessage = msg;
-    this.toastType = type;
-    this.isToastOpen = true;
-  }
 }

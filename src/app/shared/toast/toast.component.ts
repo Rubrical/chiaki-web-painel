@@ -1,6 +1,8 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { CommonModule } from '@angular/common';
+import { Toast, ToastService } from '../services/toast.service';
+import { Subscription } from 'rxjs';
 
 
 export type ToastType = 'success' | 'error' | 'warning';
@@ -23,29 +25,23 @@ export type ToastType = 'success' | 'error' | 'warning';
     ]),
   ]
 })
-export class ToastComponent implements OnChanges {
-  @Input() message: string = '';
-  @Input() showToast: boolean = false;
-  @Input() type: ToastType = 'error';
-  @Input() delayMs = 5000;
-  @Output() toastClosed = new EventEmitter<void>();
+export class ToastComponent implements OnInit {
+  toasts: Toast[] = [];
 
-  private timeoutRef: any;
+  constructor(private toastService: ToastService) {}
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['showToast']?.currentValue === true) {
-      clearTimeout(this.timeoutRef);
-      this.timeoutRef = setTimeout(() => this.closeToast(), this.delayMs);
-    }
+  ngOnInit(): void {
+    this.toastService.toasts$.subscribe(toasts => {
+      this.toasts = toasts;
+    });
   }
 
-  closeToast() {
-    this.showToast = false;
-    this.toastClosed.emit();
+  remove(id: number) {
+    this.toastService.remove(id);
   }
 
-  get toastClass() {
-    switch (this.type) {
+  toastClass(type: string): string {
+    switch (type) {
       case 'success': return 'text-bg-success';
       case 'error': return 'text-bg-danger';
       case 'warning': return 'text-bg-warning';

@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
+import { ToastService } from '../shared/services/toast.service';
 
 @Component({
   selector: 'app-main',
@@ -11,16 +12,18 @@ import { AuthService } from '../shared/services/auth.service';
 export class MainComponent implements OnInit {
   ownerName: null | string = '';
   authService = inject(AuthService);
+  toastService = inject(ToastService);
   navigationLinks = [
     { label: 'Ler QR Code', route: '/qrcode' },
-    { label: 'Sair', route: '/auth' },
     { label: 'Grupos', route: '/grupos-lista' },
+    { label: 'Sair', route: '/auth' },
   ];
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.ownerName = this.authService.getUsername();
+    this.toastService.success(`Bem-vindo, ${this.ownerName}!`);
   }
 
   navigateTo(route: string): void {

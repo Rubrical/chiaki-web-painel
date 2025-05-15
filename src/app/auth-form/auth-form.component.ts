@@ -4,24 +4,23 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService, Root } from '../shared/services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ToastComponent } from '../shared/toast/toast.component';
+import { ToastService } from '../shared/services/toast.service';
 
 @Component({
   selector: 'app-auth-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ToastComponent],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './auth-form.component.html',
   styleUrl: './auth-form.component.sass',
 })
 export class AuthFormComponent implements OnInit {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
+  private toastService = inject(ToastService);
   private router = inject(Router);
 
   mode: 'login' | 'signup' = 'login';
-  errorMessage = '';
   rootExists = false;
-  showToast = false;
 
   authForm = this.fb.group({
     name: ['', [Validators.required]],
@@ -45,10 +44,7 @@ export class AuthFormComponent implements OnInit {
         });
       },
       error: (err: HttpErrorResponse) => {
-        if (!err.status || err.status === 0) {
-          this.errorMessage = "Sistema Offline";
-          this.showToast = true;
-        }
+        if (!err.status || err.status === 0) this.toastService.error("Sistema Offline");
         console.log(err);
       }
     });
@@ -79,14 +75,19 @@ export class AuthFormComponent implements OnInit {
 
       authAction.subscribe({
         next: (response) => {
+          const succesMessage = this.mode === 'login'
+            ? 'Login bem sucedido'
+            : 'Registro bem sucedido! Aproveite ;)';
+
+          this.toastService.success(succesMessage, 1800);
           this.authService.setToken(response.token);
           this.router.navigateByUrl('/home');
         },
         error: (err) => {
-          this.errorMessage = this.mode === 'login'
+          const errorMessage = this.mode === 'login'
             ? 'Login falhou. Usuário ou senha incorretos'
             : 'Falha no registro. Tente novamente';
-          this.showToast = true;
+          this.toastService.error(errorMessage);
           console.error('Auth error:', err);
         },
       });
