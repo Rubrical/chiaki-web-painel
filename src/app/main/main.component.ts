@@ -12,8 +12,9 @@ export class MainComponent implements OnInit {
   ownerName: null | string = '';
   authService = inject(AuthService);
   navigationLinks = [
-    { label: 'Ir para QR Code', route: '/qrcode' },
+    { label: 'Ler QR Code', route: '/qrcode' },
     { label: 'Sair', route: '/auth' },
+    { label: 'Grupos', route: '/grupos-lista' },
   ];
 
   constructor(private router: Router) {}

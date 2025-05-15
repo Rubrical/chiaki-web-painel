@@ -36,6 +36,9 @@
               "node_modules/bootstrap-icons/font/bootstrap-icons.min.css",
               "src/styles.sass"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["node_modules"]
+            },
             "scripts": []
           },
           "configurations": {
