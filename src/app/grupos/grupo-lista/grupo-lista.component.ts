@@ -3,6 +3,7 @@ import { GrupoListaService } from '../../shared/services/grupo-lista.service';
 import { GroupsList } from '../../shared/models/groups-list';
 import { VoltarComponent } from '../../shared/voltar/voltar.component';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-grupo-lista',
@@ -18,7 +19,10 @@ export class GrupoListaComponent implements OnInit {
   pageSize = 10;
   totalPages = 0;
 
-  constructor(private groupListService: GrupoListaService) { }
+  constructor(
+    private groupListService: GrupoListaService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.groupListService.getCount().subscribe({
@@ -32,8 +36,6 @@ export class GrupoListaComponent implements OnInit {
   loadPage(page: number): void {
     this.groupListService.getLista(this.pageSize, page).subscribe({
       next: response => {
-        console.log(response);
-
         this.totalPages = response.total;
         this.groupList = response.data;
         this.pageNumber = page;
@@ -43,6 +45,6 @@ export class GrupoListaComponent implements OnInit {
   }
 
   consult(groupId: string) {
-    console.log(groupId);
+    this.router.navigate(['/grupo-consulta', groupId]);
   }
 }

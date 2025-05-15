@@ -22,6 +22,11 @@ export const routes: Routes = [
     loadComponent: () => import("./grupos/grupo-lista/grupo-lista.component").then(c => c.GrupoListaComponent),
     canActivate: [authGuard],
   },
+  {
+    path: 'grupo-consulta/:id',
+    loadComponent: () => import("./grupos/grupo-consulta/grupo-consulta.component").then(c => c.GrupoConsultaComponent),
+    canActivate: [authGuard]
+  },
   { path: '', redirectTo: '/auth', pathMatch: 'full' },
   { path: '**', redirectTo: '/auth' },
 ];
