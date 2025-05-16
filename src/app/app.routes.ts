@@ -27,6 +27,11 @@ export const routes: Routes = [
     loadComponent: () => import("./grupos/grupo-consulta/grupo-consulta.component").then(c => c.GrupoConsultaComponent),
     canActivate: [authGuard]
   },
+  {
+    path: 'rank-grupo/:id',
+    loadComponent: () => import("./grupos/grupo-rank/grupo-rank.component").then(c => c.GrupoRankComponent),
+    canActivate: [authGuard]
+  },
   { path: '', redirectTo: '/auth', pathMatch: 'full' },
   { path: '**', redirectTo: '/auth' },
 ];

@@ -16,6 +16,7 @@ import { Message } from '../../shared/models/message';
   styleUrl: './grupo-consulta.component.sass'
 })
 export class GrupoConsultaComponent implements OnInit{
+  private groupId = "";
   grupoConsulta?: GroupReport;
   goodbyeMessage?: Message;
   welcomeMessage?: Message;
@@ -32,6 +33,8 @@ export class GrupoConsultaComponent implements OnInit{
     const groupId = this.route.snapshot.paramMap.get('id');
 
     if (groupId) {
+      this.groupId = groupId;
+
       // get group data
       this.grupoConsultaService.groupReport(groupId).subscribe({
         next: response => {
@@ -71,4 +74,7 @@ export class GrupoConsultaComponent implements OnInit{
     }
   }
 
+  goToRank() {
+    this.router.navigate(["rank-grupo", this.groupId]);
+  }
 }
