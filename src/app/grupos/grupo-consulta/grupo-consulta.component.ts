@@ -77,4 +77,8 @@ export class GrupoConsultaComponent implements OnInit{
   goToRank() {
     this.router.navigate(["rank-grupo", this.groupId]);
   }
+
+  goToGroupUserList() {
+    this.router.navigate(["grupo-usuario-lista", this.groupId]);
+  }
 }

@@ -32,6 +32,11 @@ export const routes: Routes = [
     loadComponent: () => import("./grupos/grupo-rank/grupo-rank.component").then(c => c.GrupoRankComponent),
     canActivate: [authGuard]
   },
+  {
+    path: 'grupo-usuario-lista/:id',
+    loadComponent: () => import("./grupos/grupo-usuario-lista/grupo-usuario-lista.component").then(c => c.GrupoUsuarioListaComponent),
+    canActivate: [authGuard],
+  },
   { path: '', redirectTo: '/auth', pathMatch: 'full' },
   { path: '**', redirectTo: '/auth' },
 ];

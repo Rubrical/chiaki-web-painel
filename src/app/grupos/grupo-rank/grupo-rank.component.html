@@ -8,6 +8,7 @@
 
       <thead>
         <tr>
+          <th>Colocação</th>
           <th>Nome</th>
           <th>Nº Mensagens</th>
           <th>Nº Comandos</th>
@@ -15,7 +16,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let rank of groupRank">
+        <tr *ngFor="let rank of groupRank; index as i">
+          <td>{{ i + 1 }}º</td>
           <td>{{ rank.nome }}</td>
           <td>{{ rank.quantidadeMensagens }}</td>
           <td>{{ rank.comandosExecutados }}</td>

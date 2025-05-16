@@ -42,6 +42,8 @@ export class GrupoRankComponent implements OnInit {
           this.toastService.error("Não foi possível carregar o rank do grupo")
         },
       });
+    } else {
+      this.toastService.warning("Id do grupo não fornecido");
     }
   }
 
