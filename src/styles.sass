@@ -14,7 +14,7 @@ body
   background-attachment: fixed
 
 // List style
-.tabela-container
+.painel-container
   @extend .container
   margin-top: 3rem
   margin-bottom: 3rem
@@ -24,9 +24,12 @@ body
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075)
 
   .titulo
-    @extend .h3
+    @extend .h1
+    display: flex
     margin-bottom: 0.175rem
     margin-top: 2rem
+    justify-content: center
+    border-bottom: 1px solid black
 
   .tabela
     @extend .table
