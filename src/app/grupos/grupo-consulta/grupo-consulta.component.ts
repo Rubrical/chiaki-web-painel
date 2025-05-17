@@ -81,4 +81,8 @@ export class GrupoConsultaComponent implements OnInit{
   goToGroupUserList() {
     this.router.navigate(["grupo-usuario-lista", this.groupId]);
   }
+
+  goToBans() {
+    this.router.navigate(["grupo-consulta/bans/", this.groupId]);
+  }
 }

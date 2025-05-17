@@ -1,9 +1,26 @@
 import { Injectable } from '@angular/core';
+import { backendUrl } from '../../app.config';
+import { HttpClient } from '@angular/common/http';
+import { Ban, BanList } from '../models/ban';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BanService {
+  private readonly baseUrl = "ban";
+  private readonly routes = {
+    findBan: () => `${backendUrl}/${this.baseUrl}/find-ban`,
+    findBannedUsersFromGroup: (id: string) => `${backendUrl}/${this.baseUrl}/find-banned-users-from-group/${id}`,
+  }
+  constructor(private http: HttpClient) { }
 
-  constructor() { }
+  getBan(userRemoteJid: string, groupRemoteJid: string) {
+    return this.http.get<Ban>(this.routes.findBan(), {
+      params: { userRemoteJid, groupRemoteJid },
+    });
+  }
+
+  getBannedFromGroup(id: string) {
+    return this.http.get<BanList>(this.routes.findBannedUsersFromGroup(id));
+  }
 }
