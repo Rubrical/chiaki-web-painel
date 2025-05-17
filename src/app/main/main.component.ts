@@ -17,7 +17,9 @@ export class MainComponent implements OnInit {
     { label: 'Ler QR Code', route: '/qrcode' },
     { label: 'Grupos', route: '/grupos-lista' },
     { label: 'Sair', route: '/auth' },
-    { label: 'Usuários', route: 'usuario/usuario-lista'}
+    { label: 'Usuários', route: 'usuario/usuario-lista'},
+    { label: 'Advertências', route: 'advertencia/advertencia-lista' },
+    { label: 'Bans', route: 'bans/ban-lista' },
   ];
 
   constructor(private router: Router) {}

@@ -47,6 +47,16 @@ export const routes: Routes = [
     loadComponent: () => import("./usuarios/usuario-lista/usuario-lista.component").then(c => c.UsuarioListaComponent),
     canActivate: [authGuard],
   },
+  {
+    path: 'bans/ban-lista',
+    loadComponent: () => import("./ban/ban-lista/ban-lista.component").then(c => c.BanListaComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'advertencia/advertencia-lista',
+    loadComponent: () => import("./advertencia/advertencia-lista/advertencia-lista.component").then(c => c.AdvertenciaListaComponent),
+    canActivate: [authGuard]
+  },
   { path: '', redirectTo: '/auth', pathMatch: 'full' },
   { path: '**', redirectTo: '/auth' },
 ];
