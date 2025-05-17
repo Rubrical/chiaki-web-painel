@@ -52,7 +52,7 @@ export class GrupoUsuarioListaComponent implements OnInit {
     });
   }
 
-  consult(userId: number): void {
-    this.router.navigate(['/usuario-detalhe', userId]);
+  consult(userId: string): void {
+    this.router.navigate(['usuario/usuario-consulta/', userId]);
   }
 }
