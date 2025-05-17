@@ -54,7 +54,11 @@ export class UsuarioConsultaComponent implements OnInit {
         },
         error: err => {
           console.error(err);
-          this.toastService.error("Erro ao buscar usuário");
+          if (err.error.message) {
+            this.toastService.warning(err.error.message);
+          } else {
+            this.toastService.error("Erro ao buscar usuário");
+          }
         },
       });
     } else {

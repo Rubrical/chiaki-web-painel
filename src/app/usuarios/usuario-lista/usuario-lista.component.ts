@@ -41,7 +41,12 @@ export class UsuarioListaComponent implements OnInit {
       },
       error: err => {
         console.error(err);
-        this.toastService.error("Erro ao carregar usuários");
+        console.error(err);
+        if (err.error.message) {
+          this.toastService.warning(err.error.message);
+        } else {
+          this.toastService.error("Erro ao carregar usuários");
+        }
       },
     });
   }

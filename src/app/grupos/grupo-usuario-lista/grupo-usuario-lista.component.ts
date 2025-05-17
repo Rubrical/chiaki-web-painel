@@ -47,7 +47,9 @@ export class GrupoUsuarioListaComponent implements OnInit {
       },
       error: err => {
         console.error(err);
-        this.toastService.error("Erro ao carregar usuários");
+        if (err.error.message) {
+          this.toastService.warning(err.error.message);
+        }
       },
     });
   }

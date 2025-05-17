@@ -39,7 +39,11 @@ export class GrupoRankComponent implements OnInit {
         },
         error: err => {
           console.error(err);
-          this.toastService.error("Não foi possível carregar o rank do grupo")
+          if (err.error.message) {
+            this.toastService.warning(err.error.message);
+          } else {
+            this.toastService.error("Não foi possível carregar o rank do grupo")
+          }
         },
       });
     } else {
@@ -57,7 +61,11 @@ export class GrupoRankComponent implements OnInit {
       },
       error: err => {
         console.error(err);
-        this.toastService.error("Não foi possível carregar o rank do grupo");
+        if (err.error.message) {
+          this.toastService.warning(err.error.message);
+        } else {
+          this.toastService.error("Não foi possível carregar o rank do grupo");
+        }
       }
     });
   }
