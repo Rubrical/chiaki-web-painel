@@ -50,7 +50,9 @@ export class GrupoBanListaComponent implements OnInit {
     }
   }
 
-  consult(arg0: any) {
-    throw new Error('Method not implemented.');
+  consult(groupRemoteJid: string, userRemoteJid: string) {
+    this.router.navigate(["ban/ban-consulta"], {
+      queryParams: { groupRemoteJid, userRemoteJid }
+    });
   }
 }

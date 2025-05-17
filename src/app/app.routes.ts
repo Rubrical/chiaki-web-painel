@@ -53,6 +53,11 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
   {
+    path: 'ban/ban-consulta',
+    loadComponent: () => import("./ban/ban-consulta/ban-consulta.component").then(c => c.BanConsultaComponent),
+    canActivate: [authGuard],
+  },
+  {
     path: 'grupo-consulta/bans/:id',
     loadComponent: () => import("./grupos/grupo-ban-lista/grupo-ban-lista.component").then(c => c.GrupoBanListaComponent),
     canActivate: [authGuard]

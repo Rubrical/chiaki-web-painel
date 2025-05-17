@@ -2,7 +2,7 @@
   <app-voltar />
 
   <div class="painel-container">
-    <h2 class="titulo">Lista de Usuários</h2>
+    <h2 class="titulo">Lista de Usuários Banidos do Grupo</h2>
     <p><strong>Número de usuários banidos: </strong>{{ banList?.bannedQuantity }}</p>
     <table class="tabela">
 
@@ -26,7 +26,7 @@
             </span>
           </td>
           <td>
-            <button class="btn btn-outline-primary btn-sm" title="Consultar" (click)="consult(ban.userRemoteJid!)">
+            <button class="btn btn-outline-primary btn-sm" title="Consultar" (click)="consult(groupId, ban.userRemoteJid!)">
               <i class="bi bi-search"></i>
             </button>
           </td>

@@ -11,6 +11,8 @@ export class BanService {
   private readonly routes = {
     findBan: () => `${backendUrl}/${this.baseUrl}/find-ban`,
     findBannedUsersFromGroup: (id: string) => `${backendUrl}/${this.baseUrl}/find-banned-users-from-group/${id}`,
+    removeBan: () => `${backendUrl}/${this.baseUrl}/remove-ban`,
+    findBanPaginate: () => `${backendUrl}/${this.baseUrl}/find-ban-paginate`
   }
   constructor(private http: HttpClient) { }
 
@@ -22,5 +24,16 @@ export class BanService {
 
   getBannedFromGroup(id: string) {
     return this.http.get<BanList>(this.routes.findBannedUsersFromGroup(id));
+  }
+
+  removeBan(userRemoteJid: string, groupRemoteJid: string) {
+    return this.http.patch<boolean>(this.routes.removeBan(), {
+      userRemoteJid,
+      groupRemoteJid
+    });
+  }
+
+  getBansPaginate(pageNumber: number, pageSize: number) {
+    return this.http.get<{ data: Ban[], total: number }>(this.routes.findBanPaginate(), { params: { pageNumber, pageSize }});
   }
 }
